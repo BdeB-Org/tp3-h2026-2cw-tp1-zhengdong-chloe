@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boutique &amp; guitare — Paniers</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">🎸</span>
+        <span>
+          <span class="logo-text">Boutique &amp; guitare</span>
+          <span class="logo-sub">Montréal · Depuis 1994</span>
+        </span>
+      </a>
+      <nav>
+        <a href="index.html">Accueil</a>
+        <a href="clients.html">Clients</a>
+        <a href="produits.html">Produits</a>
+        <a href="fabricants.html">Fabricants</a>
+        <a href="paniers.html" class="actif">Paniers</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Gestion des <span>🛒 Paniers</span></h1>
+        <p class="page-subtitle"><span id="compteur">—</span> — Commandes clients en cours</p>
+      </div>
+      <div class="toolbar">
+        <div class="search-wrapper">
+          <span class="search-icon">&#9906;</span>
+          <input type="search" id="recherche" class="form-control search-input" placeholder="Rechercher par client ou date..." />
+        </div>
+        <button id="btn-ajouter" class="btn btn-primary">🛒 Créer un panier</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">🛒 Liste des paniers</span>
+        <span class="badge badge-gold">paniers</span>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:60px">ID</th>
+              <th>Client</th>
+              <th style="width:200px">Date de création</th>
+              <th style="width:100px">Statut</th>
+              <th style="width:210px">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="paniers-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div style="margin-top:.9rem; display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
+      <span style="font-family:var(--font-m); font-size:.6rem; text-transform:uppercase; letter-spacing:.14em; color:var(--faint);">Légende :</span>
+      <span class="badge badge-green">Récent</span>
+      <span style="font-size:.82rem; color:var(--muted);">moins de 7 jours</span>
+      <span class="badge badge-gold">Actif</span>
+      <span style="font-size:.82rem; color:var(--muted);">moins de 30 jours</span>
+      <span class="badge badge-red">Ancien</span>
+      <span style="font-size:.82rem; color:var(--muted);">plus de 30 jours</span>
+    </div>
+
+  </main>
+
+  <footer>
+    <span>Boutique &amp; guitare</span> — 4212 rue Saint-Denis, Montréal, QC — (514) 844-9217
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal-overlay" class="modal-overlay">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <span id="modal-titre" class="modal-title">🛒 Nouveau panier</span>
+        <button id="btn-fermer-modal" class="modal-close" aria-label="Fermer">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <form id="form-panier" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="select-client">Client *</label>
+            <select id="select-client" class="form-control" required>
+              <option value="">— Sélectionner un client —</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="field-date">Date de création</label>
+            <input type="date" id="field-date" class="form-control" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="fermerModal()">Annuler</button>
+        <button type="submit" id="btn-soumettre" class="btn btn-primary" form="form-panier">Créer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation -->
+  <div id="confirm-overlay" class="confirm-overlay">
+    <div class="confirm-box">
+      <div class="confirm-icon">&#9888;</div>
+      <div class="confirm-title">Confirmer la suppression</div>
+      <div class="confirm-msg">Supprimer <strong id="confirm-nom-panier"></strong> ? Cette action est irréversible.</div>
+      <div class="confirm-actions">
+        <button id="btn-annuler-confirm" class="btn btn-secondary">Annuler</button>
+        <button id="btn-confirmer-suppr" class="btn btn-danger" style="padding:.6rem 1.3rem;font-size:.68rem;">Supprimer</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="js/api.js"></script>
+  <script src="js/paniers.js"></script>
+</body>
+</html>
