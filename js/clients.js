@@ -1,22 +1,17 @@
 /**
- * clients.js — Gestion des Clients
- * Manipulation du DOM et événements.
- * Tous les appels API passent par api.js.
- */
+ clients.js — Gestion des Clients
+  Manipulation du DOM et événements.
+  Tous les appels API passent par api.js. */
 
 'use strict';
 
-/* ══════════════════════════════════
-   ÉTAT LOCAL
-   ══════════════════════════════════ */
-let _clients = [];        // cache des clients affichés
-let _modeEdition = false; // true = formulaire en mode édition
-let _idEdition = null;    // id du client en cours d'édition
-let _idSupprimer = null;  // id à confirmer pour suppression
+/*  ÉTAT LOCAL */
+let _clients = [];        
+let _modeEdition = false; 
+let _idEdition = null;    
+let _idSupprimer = null;  
 
-/* ══════════════════════════════════
-   INITIALISATION
-   ══════════════════════════════════ */
+/* INITIALISATION */
 document.addEventListener('DOMContentLoaded', () => {
   chargerClients();
   attacherEvenements();
@@ -26,13 +21,12 @@ function attacherEvenements() {
   // Bouton "Ajouter un client"
   document.getElementById('btn-ajouter').addEventListener('click', ouvrirModalAjout);
 
-  // Fermer le modal principal
+  
   document.getElementById('btn-fermer-modal').addEventListener('click', fermerModal);
   document.getElementById('modal-overlay').addEventListener('click', e => {
     if (e.target === e.currentTarget) fermerModal();
   });
 
-  // Soumission du formulaire
   document.getElementById('form-client').addEventListener('submit', soumettreFormulaire);
 
   // Fermer confirmation
@@ -51,9 +45,7 @@ function attacherEvenements() {
   });
 }
 
-/* ══════════════════════════════════
-   CHARGEMENT DES DONNÉES
-   ══════════════════════════════════ */
+/* CHARGEMENT DES DONNÉES */
 async function chargerClients() {
   const tbody = document.getElementById('clients-tbody');
   tbody.innerHTML = `
@@ -80,9 +72,7 @@ async function chargerClients() {
   }
 }
 
-/* ══════════════════════════════════
-   RENDU DU TABLEAU
-   ══════════════════════════════════ */
+/* RENDU DU TABLEAU */
 function rendreTableau(clients) {
   const tbody = document.getElementById('clients-tbody');
 
@@ -117,9 +107,7 @@ function rendreTableau(clients) {
   `).join('');
 }
 
-/* ══════════════════════════════════
-   MODAL — AJOUT
-   ══════════════════════════════════ */
+/*  MODAL — AJOUT */
 function ouvrirModalAjout() {
   _modeEdition = false;
   _idEdition = null;
@@ -129,9 +117,7 @@ function ouvrirModalAjout() {
   ouvrirModal();
 }
 
-/* ══════════════════════════════════
-   MODAL — ÉDITION
-   ══════════════════════════════════ */
+/* MODAL — ÉDITION */
 async function ouvrirModalEdition(id) {
   _modeEdition = true;
   _idEdition = id;
@@ -151,9 +137,7 @@ async function ouvrirModalEdition(id) {
   }
 }
 
-/* ══════════════════════════════════
-   SOUMISSION DU FORMULAIRE
-   ══════════════════════════════════ */
+/*SOUMISSION DU FORMULAIRE */
 async function soumettreFormulaire(e) {
   e.preventDefault();
 
@@ -189,9 +173,7 @@ async function soumettreFormulaire(e) {
   }
 }
 
-/* ══════════════════════════════════
-   SUPPRESSION
-   ══════════════════════════════════ */
+/* SUPPRESSION */
 function demanderSuppression(id) {
   _idSupprimer = id;
   const client = _clients.find(c => c.id_client == id);
@@ -221,9 +203,7 @@ async function confirmerSuppression() {
   }
 }
 
-/* ══════════════════════════════════
-   MODAL HELPERS
-   ══════════════════════════════════ */
+/* MODAL HELPERS */
 function ouvrirModal() {
   document.getElementById('modal-overlay').classList.add('visible');
   document.getElementById('field-nom').focus();
@@ -239,9 +219,7 @@ function fermerConfirm() {
   _idSupprimer = null;
 }
 
-/* ══════════════════════════════════
-   UTILITAIRES
-   ══════════════════════════════════ */
+/* UTILITAIRES */
 function escHtml(str) {
   const d = document.createElement('div');
   d.textContent = str ?? '';

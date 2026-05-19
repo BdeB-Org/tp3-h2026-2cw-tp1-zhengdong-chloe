@@ -1,6 +1,6 @@
-/**
- * api.js — Couche de communication avec l'API Oracle ORDS
- * Boutique Guitare — TP3
+/*
+  api.js — Couche de communication avec l'API Oracle ORDS
+ Boutique Guitare — TP3
  
  */
 
@@ -44,7 +44,7 @@ const INITIAL_DATA = {
   ],
 };
 
-/* INITIALISATION DU Mock*/
+/* INITIALISATION DU Mock */
 const DB_KEY = 'boutique_guitar_db';
 
 function _initMockDB() {
@@ -67,9 +67,7 @@ function _nextId(items, pkField) {
   return Math.max(...items.map(i => i[pkField] || 0)) + 1;
 }
 
-/* ══════════════════════════════════════════════
-   MOCK API — simule Oracle ORDS
-   ══════════════════════════════════════════════ */
+/* MOCK API — simule Oracle ORDS*/
 const MockAPI = {
   async getAll(entite) {
     await _delay(120);
@@ -123,9 +121,7 @@ const MockAPI = {
   },
 };
 
-/* ══════════════════════════════════════════════
-   API RÉELLE — appels Oracle ORDS via fetch()
-   ══════════════════════════════════════════════ */
+/* API RÉELLE — appels Oracle ORDS via fetch()*/
 const RealAPI = {
   async getAll(entite) {
     const res = await fetch(`${API_CONFIG.BASE_URL}/${entite}/`, {
@@ -184,56 +180,51 @@ const RealAPI = {
   },
 };
 
-/* ══════════════════════════════════════════════
-   API PUBLIQUE — fonctions exportées
-   Aucun fetch() ne doit exister en dehors de ce fichier.
-   ══════════════════════════════════════════════ */
+/* API PUBLIQUE — fonctions exportées  Aucun fetch() ne doit exister en dehors de ce fichier.*/
 
-/** Récupère tous les enregistrements d'une entité */
+/* Récupère tous les enregistrements d'une entité */
 async function getAll(entite) {
   return API_CONFIG.MOCK_MODE
     ? MockAPI.getAll(entite)
     : RealAPI.getAll(entite);
 }
 
-/** Récupère un enregistrement par son identifiant */
+/* Récupère un enregistrement par son identifiant */
 async function getById(entite, id) {
   return API_CONFIG.MOCK_MODE
     ? MockAPI.getById(entite, id)
     : RealAPI.getById(entite, id);
 }
 
-/** Crée un nouvel enregistrement */
+/* Crée un nouvel enregistrement */
 async function create(entite, donnees) {
   return API_CONFIG.MOCK_MODE
     ? MockAPI.create(entite, donnees)
     : RealAPI.create(entite, donnees);
 }
 
-/** Met à jour un enregistrement existant */
+/* Met à jour un enregistrement existant */
 async function update(entite, id, donnees) {
   return API_CONFIG.MOCK_MODE
     ? MockAPI.update(entite, id, donnees)
     : RealAPI.update(entite, id, donnees);
 }
 
-/** Supprime un enregistrement */
+/* Supprime un enregistrement */
 async function remove(entite, id) {
   return API_CONFIG.MOCK_MODE
     ? MockAPI.remove(entite, id)
     : RealAPI.remove(entite, id);
 }
 
-/* ══════════════════════════════════════════════
-   UTILITAIRES INTERNES
-   ══════════════════════════════════════════════ */
+/* UTILITAIRES INTERNES */
 function _getPkField(entite) {
   const pks = {
     clients:    'id_client',
     produits:   'id_produit',
     fabricants: 'id_manu',
     paniers:    'id_panier',
-  };
+  }; 
   return pks[entite] || 'id';
 }
 
@@ -244,7 +235,7 @@ function _delay(ms) {
 /* Initialisation au chargement */
 if (API_CONFIG.MOCK_MODE) _initMockDB();
 
-/* Expose l'état du mode API */
+/* Expose l'état */
 function getModeLabel() {
   return API_CONFIG.MOCK_MODE ? 'mock' : 'live';
 }

@@ -1,7 +1,7 @@
 /**
- * fabricants.js — Gestion des Fabricants
- * Manipulation du DOM et événements.
- * Tous les appels API passent par api.js.
+  fabricants.js — Gestion des Fabricants
+  Manipulation du DOM et événements.
+  Tous les appels API passent par api.js.
  */
 
 'use strict';

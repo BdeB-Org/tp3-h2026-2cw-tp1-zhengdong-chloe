@@ -1,7 +1,7 @@
 /**
- * paniers.js — Gestion des Paniers
- * Manipulation du DOM et événements.
- * Tous les appels API passent par api.js.
+ paniers.js — Gestion des Paniers
+  Manipulation du DOM et événements.
+ Tous les appels API passent par api.js.
  */
 
 'use strict';
