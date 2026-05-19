@@ -22,22 +22,6 @@ boutique-guitar/
     ├── fabricants.js  
     └── paniers.js      
 
-
-
-
 Aucune configuration requise. Ouvrir avec **Live Server** dans VS Code.
-
-Mode Oracle ORDS réel
-1. Démarrer Oracle ORDS sur votre serveur
-2. Ouvrir `js/api.js`
-3. Modifier la configuration :
-     js
-   const API_CONFIG = {
-     BASE_URL: 'http://localhost:8080/ords/VOTRE_SCHEMA',
-     MOCK_MODE: false,  // ← mettre à false
-   };
-
- S'assurer que les tables ORDS suivantes sont activées :
-
 
 *Projet scolaire — Collège Bois-de-Boulogne*
