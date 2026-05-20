@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boutique de Guitare — Accueil</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">🎸</span>
+        <span>
+          <span class="logo-text">Boutique de Guitare</span>
+          <span class="logo-sub">Montréal · Depuis 1994</span>
+        </span>
+      </a>
+      <nav>
+        <a href="index.html" class="actif">Accueil</a>
+        <a href="clients.html">Clients</a>
+        <a href="produits.html">Produits</a>
+        <a href="fabricants.html">Fabricants</a>
+        <a href="paniers.html">Paniers</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <p class="hero-eyebrow">Boutique de guitares — Montréal</p>
+      <h1 class="hero-title">Boutique de<br/><em>Guitare</em></h1>
+      <p class="hero-desc">
+        Depuis 1994, nous sélectionnons les meilleures guitares acoustiques et électriques
+        pour les musiciens de tous niveaux. Instruments, accessoires et service expert.
+      </p>
+      <div class="hero-actions">
+        <a href="produits.html" class="btn btn-primary">Voir le catalogue</a>
+        <a href="clients.html"  class="btn btn-secondary">Gérer les clients</a>
+      </div>
+    </section>
+
+    <section>
+      <div class="page-header">
+        <div>
+          <h2 class="page-title">Tableau de <span>bord</span></h2>
+          <p class="page-subtitle">Vue d'ensemble de la base de données</p>
+        </div>
+        <span id="api-mode-badge" class="api-badge mock">
+          <span class="api-dot"></span>
+          <span id="api-mode-label">Mode simulé</span>
+        </span>
+      </div>
+
+      <div class="stats-grid">
+        <a href="clients.html" class="stat-card">
+          <div class="stat-value" id="stat-clients">—</div>
+          <div class="stat-label">Clients</div>
+        </a>
+        <a href="produits.html" class="stat-card">
+          <div class="stat-value" id="stat-produits">—</div>
+          <div class="stat-label">Produits</div>
+        </a>
+        <a href="fabricants.html" class="stat-card">
+          <div class="stat-value" id="stat-fabricants">—</div>
+          <div class="stat-label">Fabricants</div>
+        </a>
+        <a href="paniers.html" class="stat-card">
+          <div class="stat-value" id="stat-paniers">—</div>
+          <div class="stat-label">Paniers</div>
+        </a>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <section>
+      <div class="page-header">
+        <div>
+          <h2 class="page-title">Produits <span>récents</span></h2>
+          <p class="page-subtitle">Derniers articles ajoutés au catalogue</p>
+        </div>
+        <a href="produits.html" class="btn btn-secondary">Voir tout</a>
+      </div>
+      <div class="panel">
+        <div class="panel-body">
+          <div id="produits-apercu">
+            <div class="spinner-wrapper">
+              <div class="spinner"></div>
+              Chargement...
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <section>
+      <div class="page-header">
+        <div>
+          <h2 class="page-title">À <span>propos</span></h2>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-body" style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+          <div>
+            <p style="font-family:var(--font-m); font-size:.65rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-bottom:.75rem;">La boutique</p>
+            <p style="color:var(--muted); line-height:1.85;">
+              Fondée par Gilles Archambault au cœur du Plateau-Mont-Royal, 
+              <strong style="color:var(--text)">Boutique de Guitare</strong> est devenue 
+              une référence incontournable pour les guitaristes québécois. Notre équipe de 
+              passionnés vous guide dans le choix de votre instrument idéal.
+            </p>
+          </div>
+          <div>
+            <p style="font-family:var(--font-m); font-size:.65rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-bottom:.75rem;">Nos services</p>
+            <ul style="list-style:none; color:var(--muted); line-height:2.1;">
+              <li>Vente de guitares neuves et d'occasion</li>
+              <li>Réparation et lutherie sur place</li>
+              <li>Cours de guitare tous niveaux</li>
+              <li>Location d'instruments pour débutants</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>Boutique de Guitare</span> — 4212 rue Saint-Denis, Montréal, QC — (514) 844-9217
+  </footer>
+
+  <div id="toast-container"></div>
+
+  <script src="js/api.js"></script>
+  <script>
+    'use strict';
+
+    const badge = document.getElementById('api-mode-badge');
+    const label = document.getElementById('api-mode-label');
+    const mode  = getModeLabel();
+    badge.className = `api-badge ${mode}`;
+    label.textContent = mode === 'mock' ? 'Mode simulé' : 'Oracle ORDS connecté';
+
+    async function chargerStats() {
+      try {
+        const [c, p, f, pa] = await Promise.all([
+          getAll('clients'), getAll('produits'),
+          getAll('fabricants'), getAll('paniers'),
+        ]);
+        document.getElementById('stat-clients').textContent    = c.count  ?? c.items.length;
+        document.getElementById('stat-produits').textContent   = p.count  ?? p.items.length;
+        document.getElementById('stat-fabricants').textContent = f.count  ?? f.items.length;
+        document.getElementById('stat-paniers').textContent    = pa.count ?? pa.items.length;
+      } catch (e) { console.error(e); }
+    }
+
+    async function chargerProduitsApercu() {
+      const el = document.getElementById('produits-apercu');
+      try {
+        const data  = await getAll('produits');
+        const items = data.items.slice(-3).reverse();
+        if (!items.length) {
+          el.innerHTML = '<div class="empty-state"><div class="empty-state-text">Aucun produit</div></div>';
+          return;
+        }
+        el.innerHTML = items.map(p => `
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:.85rem 0;border-bottom:1px solid var(--border);">
+            <div>
+              <div style="font-weight:600">${esc(p.nom_produit)}</div>
+              <div style="font-family:var(--font-m);font-size:.72rem;color:var(--faint);margin-top:.15rem">#${p.id_produit}</div>
+            </div>
+            <div class="td-price">${prix(p.prix_produit)}</div>
+          </div>`).join('');
+      } catch {
+        el.innerHTML = '<div class="empty-state"><div class="empty-state-text">Erreur de chargement</div></div>';
+      }
+    }
+
+    function esc(s) { const d = document.createElement('div'); d.textContent = s ?? ''; return d.innerHTML; }
+    function prix(v) { return v != null ? parseFloat(v).toLocaleString('fr-CA',{style:'currency',currency:'CAD'}) : '—'; }
+
+    chargerStats();
+    chargerProduitsApercu();
+  </script>
+
+</body>
+</html>

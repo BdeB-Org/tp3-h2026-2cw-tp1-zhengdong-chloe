@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boutique de Guitare — Clients</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">🎸</span>
+        <span>
+          <span class="logo-text">Boutique de Guitare</span>
+          <span class="logo-sub">Montréal · Depuis 1994</span>
+        </span>
+      </a>
+      <nav>
+        <a href="index.html">Accueil</a>
+        <a href="clients.html" class="actif">Clients</a>
+        <a href="produits.html">Produits</a>
+        <a href="fabricants.html">Fabricants</a>
+        <a href="paniers.html">Paniers</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Gestion des <span>Clients</span></h1>
+        <p class="page-subtitle"><span id="compteur">—</span> — Membres de la clientèle</p>
+      </div>
+      <div class="toolbar">
+        <div class="search-wrapper">
+          <span class="search-icon">&#9906;</span>
+          <input type="search" id="recherche" class="form-control search-input" placeholder="Rechercher un client..." />
+        </div>
+        <button id="btn-ajouter" class="btn btn-primary">+ Ajouter un client</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Liste des clients</span>
+        <span class="badge badge-gold">clients</span>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:60px">ID</th>
+              <th>Nom</th>
+              <th>Téléphone</th>
+              <th>Adresse</th>
+              <th style="width:210px">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="clients-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <span>Boutique de Guitare</span> — 4212 rue Saint-Denis, Montréal, QC — (514) 844-9217
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal-overlay" class="modal-overlay">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <span id="modal-titre" class="modal-title">Nouveau client</span>
+        <button id="btn-fermer-modal" class="modal-close" aria-label="Fermer">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <form id="form-client" novalidate>
+          <input type="hidden" id="field-id" />
+          <div class="form-group">
+            <label class="form-label" for="field-nom">Nom du client *</label>
+            <input type="text" id="field-nom" class="form-control" placeholder="ex. Tremblay, Marie" required maxlength="100" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="field-tel">Téléphone</label>
+            <input type="tel" id="field-tel" class="form-control" placeholder="ex. 514-555-0123" maxlength="20" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="field-adr">Adresse</label>
+            <input type="text" id="field-adr" class="form-control" placeholder="ex. 123 rue Principale, Montréal" maxlength="200" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="fermerModal()">Annuler</button>
+        <button type="submit" id="btn-soumettre" class="btn btn-primary" form="form-client">Créer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation -->
+  <div id="confirm-overlay" class="confirm-overlay">
+    <div class="confirm-box">
+      <div class="confirm-icon">&#9888;</div>
+      <div class="confirm-title">Confirmer la suppression</div>
+      <div class="confirm-msg">Supprimer le client <strong id="confirm-nom-client"></strong> ? Cette action est irréversible.</div>
+      <div class="confirm-actions">
+        <button id="btn-annuler-confirm" class="btn btn-secondary">Annuler</button>
+        <button id="btn-confirmer-suppr" class="btn btn-danger" style="padding:.6rem 1.3rem;font-size:.68rem;">Supprimer</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="js/api.js"></script>
+  <script src="js/clients.js"></script>
+</body>
+</html>
